@@ -1,0 +1,561 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1
+Server version: 5.1.38-community MySQL Community Server (GPL)
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| app                |
+| app1               |
+| app3               |
+| apppu              |
+| appu               |
+| appu1              |
+| assignment         |
+| csp                |
+| day2               |
+| dharni             |
+| dharnii            |
+| emartdb            |
+| emp                |
+| employee           |
+| exam               |
+| ganu               |
+| java               |
+| km                 |
+| monstee            |
+| monster            |
+| my_practice        |
+| myapp              |
+| mydata             |
+| mydb               |
+| mydemodata         |
+| mypp1              |
+| mysql              |
+| new1               |
+| part1              |
+| poo                |
+| prithvi            |
+| ratna              |
+| rock               |
+| rohan              |
+| rooftop            |
+| rushiii            |
+| saurabh            |
+| sav                |
+| savi               |
+| shubham            |
+| sowrabh            |
+| sowrabh1           |
+| study              |
+| test               |
+| testdb             |
+| vita               |
+| vita_db1           |
+| vita_db12          |
+| vita_sa            |
+| vitainfo           |
+| vitasaurabh        |
++--------------------+
+52 rows in set (0.76 sec)
+
+mysql> use employee
+Database changed
+mysql> describe employee;
+ERROR 1146 (42S02): Table 'employee.employee' doesn't exist
+mysql> show employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> describe tables;
+ERROR 1146 (42S02): Table 'employee.tables' doesn't exist
+mysql> describe table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'table' at line 1
+mysql> show tables;
++--------------------+
+| Tables_in_employee |
++--------------------+
+| datatype           |
+| emp                |
+| mydate             |
+| mydate1            |
+| special            |
++--------------------+
+5 rows in set (0.13 sec)
+
+mysql> create table student
+    -> ( stud_id int auto_increment primary key,
+    -> fname varchar(20),
+    -> mname varchar(20),
+    -> lname varchar(20)not null,
+    -> doj datetime,
+    -> email varchar(30) ,
+    -> phone char(10),
+    -> stud_course('dac','dbda','cyber','embedded'));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near '('dac','dbda','cyber','embedded'))' at line 9
+
+mysql> create table student
+    -> ( stud_id int auto_increment primary key,
+    -> fname varchar(20),
+    -> mname varchar(20),
+    -> lname varchar(20)not null,
+    -> doj datetime,
+    -> email varchar(30) ,
+    -> phone char(10),
+    -> stud_course enum('dac','dbda','cyber','embedded'));
+Query OK, 0 rows affected (0.17 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_employee |
++--------------------+
+| datatype           |
+| emp                |
+| mydate             |
+| mydate1            |
+| special            |
+| student            |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> describe student;
++-------------+---------------------------------------+------+-----+---------+----------------+
+| Field       | Type                                  | Null | Key | Default | Extra          |
++-------------+---------------------------------------+------+-----+---------+----------------+
+| stud_id     | int(11)                               | NO   | PRI | NULL    | auto_increment |
+| fname       | varchar(20)                           | YES  |     | NULL    |                |
+| mname       | varchar(20)                           | YES  |     | NULL    |                |
+| lname       | varchar(20)                           | NO   |     | NULL    |                |
+| doj         | datetime                              | YES  |     | NULL    |                |
+| email       | varchar(30)                           | YES  |     | NULL    |                |
+| phone       | char(10)                              | YES  |     | NULL    |                |
+| stud_course | enum('dac','dbda','cyber','embedded') | YES  |     | NULL    |                |
++-------------+---------------------------------------+------+-----+---------+----------------+
+8 rows in set (0.01 sec)
+
+mysql> desc student;
++-------------+---------------------------------------+------+-----+---------+----------------+
+| Field       | Type                                  | Null | Key | Default | Extra          |
++-------------+---------------------------------------+------+-----+---------+----------------+
+| stud_id     | int(11)                               | NO   | PRI | NULL    | auto_increment |
+| fname       | varchar(20)                           | YES  |     | NULL    |                |
+| mname       | varchar(20)                           | YES  |     | NULL    |                |
+| lname       | varchar(20)                           | NO   |     | NULL    |                |
+| doj         | datetime                              | YES  |     | NULL    |                |
+| email       | varchar(30)                           | YES  |     | NULL    |                |
+| phone       | char(10)                              | YES  |     | NULL    |                |
+| stud_course | enum('dac','dbda','cyber','embedded') | YES  |     | NULL    |                |
++-------------+---------------------------------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> desc emp
+    -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(11)     | NO   | PRI | 0       |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| number | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> alter table emp
+    -> add column addr varchar(30) after name ;
+Query OK, 9 rows affected (0.20 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc emp
+    -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(11)     | NO   | PRI | 0       |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| addr   | varchar(30) | YES  |     | NULL    |       |
+| number | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table emp
+    -> add column dob date before number not null ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'before number not null' at line 2
+mysql> alter table emp
+    -> add column dob date before number;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'before number' at line 2
+mysql> alter table emp
+    -> add column dob date ;
+Query OK, 9 rows affected (0.09 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc emp
+    -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(11)     | NO   | PRI | 0       |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| addr   | varchar(30) | YES  |     | NULL    |       |
+| number | int(11)     | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql> alter table emp
+    -> add constraint emp_number_uq unique(number);
+Query OK, 9 rows affected (0.12 sec)
+Records: 9  Duplicates: 0  Warnings: 0
+
+mysql> desc emp
+    -> ;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(11)     | NO   | PRI | 0       |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| addr   | varchar(30) | YES  |     | NULL    |       |
+| number | int(11)     | YES  | UNI | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp;
++----+-----------+------+---------+------+
+| id | name      | addr | number  | dob  |
++----+-----------+------+---------+------+
+|  1 | ram       | NULL |   14425 | NULL |
+|  3 | gangaram  | NULL |   12562 | NULL |
+|  4 | sita      | NULL | 2178236 | NULL |
+|  5 | laksham   | NULL |  737789 | NULL |
+|  6 | kaikai    | NULL |   21765 | NULL |
+|  7 | bibhishan | NULL |   23762 | NULL |
+|  8 | suparnaka | NULL | 2347867 | NULL |
+|  9 | hanuman   | NULL |   37864 | NULL |
+| 10 | rawan     | NULL |   47868 | NULL |
++----+-----------+------+---------+------+
+9 rows in set (0.00 sec)
+
+mysql> insert into emp values (11,'radhe','mathura@123',1232425699,2019-02-08);
+ERROR 1292 (22007): Incorrect date value: '2009' for column 'dob' at row 1
+mysql> insert into emp values (11,'radhe','mathura@123',1232425699,22221122);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from emp;
++----+-----------+-------------+------------+------------+
+| id | name      | addr        | number     | dob        |
++----+-----------+-------------+------------+------------+
+|  1 | ram       | NULL        |      14425 | NULL       |
+|  3 | gangaram  | NULL        |      12562 | NULL       |
+|  4 | sita      | NULL        |    2178236 | NULL       |
+|  5 | laksham   | NULL        |     737789 | NULL       |
+|  6 | kaikai    | NULL        |      21765 | NULL       |
+|  7 | bibhishan | NULL        |      23762 | NULL       |
+|  8 | suparnaka | NULL        |    2347867 | NULL       |
+|  9 | hanuman   | NULL        |      37864 | NULL       |
+| 10 | rawan     | NULL        |      47868 | NULL       |
+| 11 | radhe     | mathura@123 | 1232425699 | 2222-11-22 |
++----+-----------+-------------+------------+------------+
+10 rows in set (0.00 sec)
+
+mysql> insert into emp values (12,'sadhe','mathur@123',11232425699,20190811);
+ERROR 1264 (22003): Out of range value for column 'number' at row 1
+mysql> insert into emp values (12,'sadhe','mathur@123',1232425699,20190811);
+ERROR 1062 (23000): Duplicate entry '1232425699' for key 'emp_number_uq'
+mysql> insert into emp values (12,'sadhe','mathur@123',1232425689,20190811);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from emp;
++----+-----------+-------------+------------+------------+
+| id | name      | addr        | number     | dob        |
++----+-----------+-------------+------------+------------+
+|  1 | ram       | NULL        |      14425 | NULL       |
+|  3 | gangaram  | NULL        |      12562 | NULL       |
+|  4 | sita      | NULL        |    2178236 | NULL       |
+|  5 | laksham   | NULL        |     737789 | NULL       |
+|  6 | kaikai    | NULL        |      21765 | NULL       |
+|  7 | bibhishan | NULL        |      23762 | NULL       |
+|  8 | suparnaka | NULL        |    2347867 | NULL       |
+|  9 | hanuman   | NULL        |      37864 | NULL       |
+| 10 | rawan     | NULL        |      47868 | NULL       |
+| 11 | radhe     | mathura@123 | 1232425699 | 2222-11-22 |
+| 12 | sadhe     | mathur@123  | 1232425689 | 2019-08-11 |
++----+-----------+-------------+------------+------------+
+11 rows in set (0.00 sec)
+
+---------COLUMN LEVEL CONSTRAINTS---------
+
+
+mysql> describe emp;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(11)     | NO   | PRI | 0       |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| addr   | varchar(30) | YES  |     | NULL    |       |
+| number | int(11)     | YES  | UNI | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_employee |
++--------------------+
+| datatype           |
+| emp                |
+| mydate             |
+| mydate1            |
+| special            |
+| student            |
++--------------------+
+6 rows in set (0.06 sec)
+
+mysql> create table emp_sal
+    -> ( sal_id auto_increment primary key,
+    -> sal_date datetime,
+    -> id int ,
+    -> constraint emp_sal_id_fk
+    -> references idno(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'auto_increment primary key,
+sal_date datetime,
+id int ,
+constraint emp_sal_id_fk' at line 2
+mysql> create table emp_sal
+    -> ( sal_id int auto_increment primary key,
+    -> sal_date datetime,
+    -> idno int reference emp(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'reference emp(id)' at line 4
+mysql> create table emp_sal
+    -> ( sal_id int auto_increment primary key,
+    -> sal_date date,
+    -> id int reference emp(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'reference emp(id)' at line 4
+mysql> create table emp_sal
+    -> ( sal_id int auto_increment primary key,
+    -> sal_date date,
+    -> idno int references emp(id);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near '' at line 4
+mysql> create table emp_sal
+    -> ( sal_id int auto_increment primary key,
+    -> sal_date date,
+    -> idno int reference emp(id),
+    -> id int ,
+    -> constraint emp_sal_id_fk
+    -> references idno(id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'reference emp(id),
+id int ,
+constraint emp_sal_id_fk
+references idno(id))' at line 4
+mysql> select * from emp;
++----+-----------+-------------+------------+------------+
+| id | name      | addr        | number     | dob        |
++----+-----------+-------------+------------+------------+
+|  1 | ram       | NULL        |      14425 | NULL       |
+|  3 | gangaram  | NULL        |      12562 | NULL       |
+|  4 | sita      | NULL        |    2178236 | NULL       |
+|  5 | laksham   | NULL        |     737789 | NULL       |
+|  6 | kaikai    | NULL        |      21765 | NULL       |
+|  7 | bibhishan | NULL        |      23762 | NULL       |
+|  8 | suparnaka | NULL        |    2347867 | NULL       |
+|  9 | hanuman   | NULL        |      37864 | NULL       |
+| 10 | rawan     | NULL        |      47868 | NULL       |
+| 11 | radhe     | mathura@123 | 1232425699 | 2222-11-22 |
+| 12 | sadhe     | mathur@123  | 1232425689 | 2019-08-11 |
++----+-----------+-------------+------------+------------+
+11 rows in set (0.00 sec)
+
+mysql> select number as num from emp where number <10000 order by number;
+Empty set (0.03 sec)
+
+mysql> select number as num from emp where number >10000 order by number;
++------------+
+| num        |
++------------+
+|      12562 |
+|      14425 |
+|      21765 |
+|      23762 |
+|      37864 |
+|      47868 |
+|     737789 |
+|    2178236 |
+|    2347867 |
+| 1232425689 |
+| 1232425699 |
++------------+
+11 rows in set (0.02 sec)
+
+mysql> select name as num from emp order by asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'asc' at line 1
+mysql> select name as num from emp order by ascending;
+ERROR 1054 (42S22): Unknown column 'ascending' in 'order clause'
+mysql> select name as num from emp order by number;
++-----------+
+| num       |
++-----------+
+| gangaram  |
+| ram       |
+| kaikai    |
+| bibhishan |
+| hanuman   |
+| rawan     |
+| laksham   |
+| sita      |
+| suparnaka |
+| sadhe     |
+| radhe     |
++-----------+
+11 rows in set (0.00 sec)
+
+mysql> alter table emp add column sal;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table emp add column sal not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'not null' at line 1
+mysql> alter table emp add column salary;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table emp add column salary float;
+Query OK, 11 rows affected (0.16 sec)
+Records: 11  Duplicates: 0  Warnings: 0
+
+mysql> alter table emp add column salary float(6,2);
+ERROR 1060 (42S21): Duplicate column name 'salary'
+mysql> alter table emp add column price float(20);
+Query OK, 11 rows affected (0.13 sec)
+Records: 11  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++----+-----------+-------------+------------+------------+--------+-------+
+| id | name      | addr        | number     | dob        | salary | price |
++----+-----------+-------------+------------+------------+--------+-------+
+|  1 | ram       | NULL        |      14425 | NULL       |   NULL |  NULL |
+|  3 | gangaram  | NULL        |      12562 | NULL       |   NULL |  NULL |
+|  4 | sita      | NULL        |    2178236 | NULL       |   NULL |  NULL |
+|  5 | laksham   | NULL        |     737789 | NULL       |   NULL |  NULL |
+|  6 | kaikai    | NULL        |      21765 | NULL       |   NULL |  NULL |
+|  7 | bibhishan | NULL        |      23762 | NULL       |   NULL |  NULL |
+|  8 | suparnaka | NULL        |    2347867 | NULL       |   NULL |  NULL |
+|  9 | hanuman   | NULL        |      37864 | NULL       |   NULL |  NULL |
+| 10 | rawan     | NULL        |      47868 | NULL       |   NULL |  NULL |
+| 11 | radhe     | mathura@123 | 1232425699 | 2222-11-22 |   NULL |  NULL |
+| 12 | sadhe     | mathur@123  | 1232425689 | 2019-08-11 |   NULL |  NULL |
++----+-----------+-------------+------------+------------+--------+-------+
+11 rows in set (0.00 sec)
+
+mysql> delete price from emp;
+ERROR 1109 (42S02): Unknown table 'price' in MULTI DELETE
+mysql> delete salary from emp;
+ERROR 1109 (42S02): Unknown table 'salary' in MULTI DELETE
+mysql> drop salary from emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'salary from emp' at line 1
+mysql> delete from emp
+    -> ;
+Query OK, 11 rows affected (0.02 sec)
+
+mysql> select * from emp;
+Empty set (0.00 sec)
+
+mysql> rollback emp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your
+MySQL server version for the right syntax to use near 'emp' at line 1
+mysql> rollback ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from emp;
+Empty set (0.00 sec)
+
+mysql> rollback ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from emp;
+Empty set (0.00 sec)
+
+mysql> insert into emp values (2,'shyam',144277),(3,'gangaram',12562),(4,'sita',2178236),(5,'laksham
+
+    '> ',737789),(6,'kaikai',21765),(7,'bhibhishan',23762),(8,'suparnaka',2347867),(9,'hanuman',3786
+4),(10,
+    -> 'rawan',47868);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> desc emp;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(11)     | NO   | PRI | 0       |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| addr   | varchar(30) | YES  |     | NULL    |       |
+| number | int(11)     | YES  | UNI | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| salary | float       | YES  |     | NULL    |       |
+| price  | float       | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> insert into emp values (2,'shyam',144277),(3,'gangaram',12562),(4,'sita',2178236),(5,'laksham
+
+    '> ',737789),(6,'kaikai',21765),(7,'bhibhishan',23762),(8,'suparnaka',2347867),(9,'hanuman',3786
+4),(10,
+    -> 'rawan',47868);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into emp values (1,'shyam','andheri@4567',213568216,20192221,5000,78.9);
+ERROR 1292 (22007): Incorrect date value: '20192221' for column 'dob' at row 1
+mysql> insert into emp values (1,'shyam','andheri@4567',213568216,20190221,5000,78.9);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from emp;
++----+-------+--------------+-----------+------------+--------+-------+
+| id | name  | addr         | number    | dob        | salary | price |
++----+-------+--------------+-----------+------------+--------+-------+
+|  1 | shyam | andheri@4567 | 213568216 | 2019-02-21 |   5000 |  78.9 |
++----+-------+--------------+-----------+------------+--------+-------+
+1 row in set (0.01 sec)
+
+mysql> insert into emp values (2,'RAM','andhri@4567',233568216,20180221,8000,79.9),
+    -> (3,'shyam',144277,20190712,7000,87.5),(4,'lucky','lucky@gmail.com',9384759,20191221,9000,56.5
+);
+ERROR 1136 (21S01): Column count doesn't match value count at row 2
+mysql> insert into emp values (2,'RAM','andhri@4567',233568216,20180221,8000,79.9),
+    -> (3,'shyam','andhrigali',144277,20190712,7000,87.5),(4,'lucky','lucky@gmail.com',9384759,20191
+221,9000,56.5);
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++----+-------+-----------------+-----------+------------+--------+-------+
+| id | name  | addr            | number    | dob        | salary | price |
++----+-------+-----------------+-----------+------------+--------+-------+
+|  1 | shyam | andheri@4567    | 213568216 | 2019-02-21 |   5000 |  78.9 |
+|  2 | RAM   | andhri@4567     | 233568216 | 2018-02-21 |   8000 |  79.9 |
+|  3 | shyam | andhrigali      |    144277 | 2019-07-12 |   7000 |  87.5 |
+|  4 | lucky | lucky@gmail.com |   9384759 | 2019-12-21 |   9000 |  56.5 |
++----+-------+-----------------+-----------+------------+--------+-------+
+4 rows in set (0.00 sec)
+
+mysql>

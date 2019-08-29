@@ -1,0 +1,398 @@
+|     2 | banglore | itpl      |
+|     3 | pune     | hinjewadi |
+|     4 | gurgaon  | dlf 2     |
++-------+----------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from dept inner join location on dept.locid=location.locid inner join emp on dept.deptid=emp.deptid;
++--------+-------+-------+-------+---------+-----------+-------+--------+-----------+--------+-------+----------+
+| deptid | dname | locid | locid | city    | addr      | empid | Fname  | Lname     | deptid | mgrid | salary   |
++--------+-------+-------+-------+---------+-----------+-------+--------+-----------+--------+-------+----------+
+|    101 | sales |     1 |     1 | mumbai  | mbp       |  1004 | Pamela | davis     |    101 |  1003 | 30000.00 |
+|    102 | HR    |     3 |     3 | pune    | hinjewadi |  1002 | neena  | kochhar   |    102 |  1001 | 40000.00 |
+|    105 | ops   |     4 |     4 | gurgaon | dlf 2     |  1001 | steven | king      |    105 |  NULL | 50000.00 |
+|    105 | ops   |     4 |     4 | gurgaon | dlf 2     |  1003 | nancy  | greenberg |    105 |  1002 | 35000.00 |
+|    105 | ops   |     4 |     4 | gurgaon | dlf 2     |  1005 | Andrew | lusk      |    105 |  1001 | 30000.00 |
+|    106 | it    |     4 |     4 | gurgaon | dlf 2     |  1006 | andy   | hillman   |    106 |  1002 | 22000.00 |
++--------+-------+-------+-------+---------+-----------+-------+--------+-----------+--------+-------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select dname, city,add
+    -> from dept right outer join location
+    -> on dept.locid=location.locid where dname is null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add
+from dept right outer join location
+on dept.locid=location.locid where dname' at line 1
+mysql> select dname, city,addr
+    -> from dept right outer join location
+    -> on dept.locid=location.locid where dname is null;
+Empty set (0.00 sec)
+
+mysql> select dname, city,addr
+    -> from dept right outer join location
+    -> on dept.locid=location.locid;
++---------+----------+-----------+
+| dname   | city     | addr      |
++---------+----------+-----------+
+| sales   | mumbai   | mbp       |
+| finance | banglore | itpl      |
+| HR      | pune     | hinjewadi |
+| mktg    | pune     | hinjewadi |
+| ops     | gurgaon  | dlf 2     |
+| it      | gurgaon  | dlf 2     |
++---------+----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql>
+mysql> insert into location values(5,'hydrabad','hitech city');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into dept values(107,'helpdesk',Null);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp values(1007,'rene','lopez',105,1001,18000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into emp values(1008,'sue','fisher',105,1001,11000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp values(1009,'tanya','singh',103,1001,10000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select dname, concat(Fname,' ',Lname) as Name,city,addr
+    -> from dept inner join location on dept.locid=location.locid
+    -> inner join emp on dept.deptid=emp.deptid;
++---------+-----------------+----------+-----------+
+| dname   | Name            | city     | addr      |
++---------+-----------------+----------+-----------+
+| sales   | Pamela davis    | mumbai   | mbp       |
+| finance | tanya singh     | banglore | itpl      |
+| HR      | neena kochhar   | pune     | hinjewadi |
+| ops     | steven king     | gurgaon  | dlf 2     |
+| ops     | nancy greenberg | gurgaon  | dlf 2     |
+| ops     | Andrew lusk     | gurgaon  | dlf 2     |
+| it      | andy hillman    | gurgaon  | dlf 2     |
+| ops     | rene lopez      | gurgaon  | dlf 2     |
+| ops     | sue fisher      | gurgaon  | dlf 2     |
++---------+-----------------+----------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> select dname , concat(Fname, ' ',Lname) as empname from dept right outer join emp on dept.deptid=emp.deptid;
++---------+-----------------+
+| dname   | empname         |
++---------+-----------------+
+| ops     | steven king     |
+| HR      | neena kochhar   |
+| ops     | nancy greenberg |
+| sales   | Pamela davis    |
+| ops     | Andrew lusk     |
+| it      | andy hillman    |
+| ops     | rene lopez      |
+| ops     | sue fisher      |
+| finance | tanya singh     |
++---------+-----------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+--------+-------+----------+
+| empid | Fname  | Lname     | deptid | mgrid | salary   |
++-------+--------+-----------+--------+-------+----------+
+|  1001 | steven | king      |    105 |  NULL | 50000.00 |
+|  1002 | neena  | kochhar   |    102 |  1001 | 40000.00 |
+|  1003 | nancy  | greenberg |    105 |  1002 | 35000.00 |
+|  1004 | Pamela | davis     |    101 |  1003 | 30000.00 |
+|  1005 | Andrew | lusk      |    105 |  1001 | 30000.00 |
+|  1006 | andy   | hillman   |    106 |  1002 | 22000.00 |
+|  1007 | rene   | lopez     |    105 |  1001 | 18000.00 |
+|  1008 | sue    | fisher    |    105 |  1001 | 11000.00 |
+|  1009 | tanya  | singh     |    103 |  1001 | 10000.00 |
++-------+--------+-----------+--------+-------+----------+
+9 rows in set (0.00 sec)
+
+mysql> select emp.Fname, emp.Lname, Mgr.Fname, Mgr.Lname
+    -> From emp emp inner join mgr mgr
+    -> On emp.mgrid=mgr.empid;
+ERROR 1146 (42S02): Table 'siddhant.mgr' doesn't exist
+mysql> select emp.Fname, emp.Lname, Mgr.Fname, Mgr.Lname
+    -> From emp emp inner join emp mgr
+    -> On emp.mgrid=mgr.empid;
++--------+-----------+--------+-----------+
+| Fname  | Lname     | Fname  | Lname     |
++--------+-----------+--------+-----------+
+| neena  | kochhar   | steven | king      |
+| nancy  | greenberg | neena  | kochhar   |
+| Pamela | davis     | nancy  | greenberg |
+| Andrew | lusk      | steven | king      |
+| andy   | hillman   | neena  | kochhar   |
+| rene   | lopez     | steven | king      |
+| sue    | fisher    | steven | king      |
+| tanya  | singh     | steven | king      |
++--------+-----------+--------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select concat (emp.Fname, ' ',emp.Lname) as empname
+    -> concat(mgr.Fname,' ',mgr.Lname) as mgrname
+    -> From emp emp left outer join  emp mgr
+    -> on emp.mgrid=mgr.empid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'concat(mgr.Fname,' ',mgr.Lname) as mgrname
+From emp emp left outer join  emp mgr' at line 2
+mysql> select concat (emp.Fname, ' ',emp.Lname) as empname,
+    -> concat(mgr.Fname,' ',mgr.Lname) as mgrname
+    -> From emp emp inner join emp mgr
+    -> On emp.mgrid=mgr.empid;
++-----------------+-----------------+
+| empname         | mgrname         |
++-----------------+-----------------+
+| neena kochhar   | steven king     |
+| nancy greenberg | neena kochhar   |
+| Pamela davis    | nancy greenberg |
+| Andrew lusk     | steven king     |
+| andy hillman    | neena kochhar   |
+| rene lopez      | steven king     |
+| sue fisher      | steven king     |
+| tanya singh     | steven king     |
++-----------------+-----------------+
+8 rows in set (0.00 sec)
+
+mysql> select concat (emp.Fname, ' ',emp.Lname) as empname,
+    -> concat(mgr.Fname,' ',mgr.Lname) as mgrname
+    -> on emp.mgrid=mgr.empid
+    -> where emp.mgrid is null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on emp.mgrid=mgr.empid
+where emp.mgrid is null' at line 3
+mysql> select concat (emp.Fname, ' ',emp.Lname) as empname,
+    -> concat(mgr.Fname,' ',mgr.Lname) as mgrname
+    -> on emp.mgrid=mgr.empid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on emp.mgrid=mgr.empid' at line 3
+mysql> select concat (emp.Fname, ' ',emp.Lname) as empname,
+    -> concat(mgr.Fname,' ',mgr.Lname) as mgrname
+    -> From emp emp inner join emp mgr
+    -> on emp.mgrid=mgr.empid
+    -> where emp.mgrid is null;
+Empty set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+--------+-------+----------+
+| empid | Fname  | Lname     | deptid | mgrid | salary   |
++-------+--------+-----------+--------+-------+----------+
+|  1001 | steven | king      |    105 |  NULL | 50000.00 |
+|  1002 | neena  | kochhar   |    102 |  1001 | 40000.00 |
+|  1003 | nancy  | greenberg |    105 |  1002 | 35000.00 |
+|  1004 | Pamela | davis     |    101 |  1003 | 30000.00 |
+|  1005 | Andrew | lusk      |    105 |  1001 | 30000.00 |
+|  1006 | andy   | hillman   |    106 |  1002 | 22000.00 |
+|  1007 | rene   | lopez     |    105 |  1001 | 18000.00 |
+|  1008 | sue    | fisher    |    105 |  1001 | 11000.00 |
+|  1009 | tanya  | singh     |    103 |  1001 | 10000.00 |
++-------+--------+-----------+--------+-------+----------+
+9 rows in set (03sid.00 sec)
+
+
+mysql> select concat(e.Fname,'  ',e.Lname) as empname, concat(m.Fname,'  ',m.Lname)
+    -> From emp e left outer join emp m
+    -> on e.mgrid=m.empid
+    -> where e.mgrid is  null;
++--------------+------------------------------+
+| empname      | concat(m.Fname,'  ',m.Lname) |
++--------------+------------------------------+
+| steven  king | NULL                         |
++--------------+------------------------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> select concat(e.Fname,'  ',e.Lname) as empname, concat(m.Fname,'  ',m.Lname) as mgrname
+    -> From emp e left outer join emp m
+    -> on e.mgrid=m.empid
+    -> where e.mgrid is  null;
++--------------+---------+
+| empname      | mgrname |
++--------------+---------+
+| steven  king | NULL    |
++--------------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+--------+-------+----------+
+| empid | Fname  | Lname     | deptid | mgrid | salary   |
++-------+--------+-----------+--------+-------+----------+
+|  1001 | steven | king      |    105 |  NULL | 50000.00 |
+|  1002 | neena  | kochhar   |    102 |  1001 | 40000.00 |
+|  1003 | nancy  | greenberg |    105 |  1002 | 35000.00 |
+|  1004 | Pamela | davis     |    101 |  1003 | 30000.00 |
+|  1005 | Andrew | lusk      |    105 |  1001 | 30000.00 |
+|  1006 | andy   | hillman   |    106 |  1002 | 22000.00 |
+|  1007 | rene   | lopez     |    105 |  1001 | 18000.00 |
+|  1008 | sue    | fisher    |    105 |  1001 | 11000.00 |
+|  1009 | tanya  | singh     |    103 |  1001 |     NULL |
++-------+--------+-----------+--------+-------+----------+
+9 rows in set (0.00 sec)
+
+mysql> select concat(Fname,'  ',Lname) as empname from emp where
+    -> mgrid= (select mgrid from emp where fname='neena' and lname='kochhar');
++----------------+
+| empname        |
++----------------+
+| neena  kochhar |
+| Andrew  lusk   |
+| rene  lopez    |
+| sue  fisher    |
+| tanya  singh   |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> select concat(Fname,'  ',Lname) as empname from emp where
+    -> mgrid= (select mgrid from emp where fname='neena' and lname='kochhar')
+    -> and not(Fname='Neena' and Lname='Kochhar');
++--------------+
+| empname      |
++--------------+
+| Andrew  lusk |
+| rene  lopez  |
+| sue  fisher  |
+| tanya  singh |
++--------------+
+4 rows in set (0.00 sec)
+
+mysql> select concat(Fname,'  ',Lname) as empname from emp where
+    -> salary=(select max(salary) from emp);
++--------------+
+| empname      |
++--------------+
+| steven  king |
++--------------+
+1 row in set (0.00 sec)
+
+
+mysql> select concat (Fname,'  ',Lname)  as empname from emp
+    ->  where salary=(select max(salary) from emp
+    -> where salary< (select max(salary) from emp));
++----------------+
+| empname        |
++----------------+
+| neena  kochhar |
++----------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> select concat (Fname,'  ',Lname)  as empname from emp
+    -> where salary=(select salary from emp order by salary desc
+    -> limit 3,1);
++---------------+
+| empname       |
++---------------+
+| Pamela  davis |
+| Andrew  lusk  |
++---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from emp;
++-------+--------+-----------+--------+-------+----------+
+| empid | Fname  | Lname     | deptid | mgrid | salary   |
++-------+--------+-----------+--------+-------+----------+
+|  1001 | steven | king      |    105 |  NULL | 50000.00 |
+|  1002 | neena  | kochhar   |    102 |  1001 | 40000.00 |
+|  1003 | nancy  | greenberg |    105 |  1002 | 35000.00 |
+|  1004 | Pamela | davis     |    101 |  1003 | 30000.00 |
+|  1005 | Andrew | lusk      |    105 |  1001 | 30000.00 |
+|  1006 | andy   | hillman   |    106 |  1002 | 22000.00 |
+|  1007 | rene   | lopez     |    105 |  1001 | 18000.00 |
+|  1008 | sue    | fisher    |    105 |  1001 | 11000.00 |
+|  1009 | tanya  | singh     |    103 |  1001 |     NULL |
++-------+--------+-----------+--------+-------+----------+
+9 rows in set (0.00 sec)
+
+mysql> select concat (Fname,'  ',Lname)  as empname from emp
+    -> where salary=(select salary from emp order by salary desc
+    -> limit 2,1);
++------------------+
+| empname          |
++------------------+
+| nancy  greenberg |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select concat (Fname,'  ',Lname)  as empname,e1.salary
+    -> count(DISTINCT e2.salary) as matcount
+    -> from emp e1 inner join emp e2
+    -> on e1.salary<= e2.salary
+    -> group by e1.salary ,concat (Fname,'  ',Lname)
+    -> having count(distinct e2.salary)=4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'count(DISTINCT e
+from emp e1 inner join emp e2
+on e1.salary' at line 2
+mysql> select concat (Fname,'  ',Lname)  as empname,e1.salary,
+    -> count(DISTINCT e2.salary) as matcount
+    -> from emp e1 inner join emp e2
+    -> on e1.salary<= e2.salary
+    -> group by e1.salary ,concat (Fname,'  ',Lname)
+    -> having count(distinct e2.salary)=4;
+ERROR 1052 (23000): Column 'Fname' in field list is ambiguous
+mysql>
+mysql> select concat (Fname,'  ',Lname)  as empname,e1.salary,
+    -> count(DISTINCT e2.salary) as matcount
+    -> from emp e1 inner join emp e2
+    -> on e1.salary<= e2.salary
+    -> group by e1.salary ,concat (Fname,'  ',Lname) as empname
+    -> having count(distinct e2.salary)=4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as empname
+having count(distinct e2.salary)=4' at line 5
+mysql> select concat (Fname,'  ',Lname)  as empname,e1.salary,
+    -> count(DISTINCT e2.salary) as matcount
+    -> from emp e1 inner join emp e2
+    -> on e1.salary<= e2.salary
+    -> group by e1.salary ,concat (e1.Fname,'  ',e1.Lname) as empname
+    -> having count(distinct e2.salary)=4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as empname
+having count(distinct e2.salary)=4' at line 5
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> select concat (Fname,'  ',Lname)  as empname,e1.salary,
+    -> count(DISTINCT e2.salary) as rowcnt
+    -> from emp e1 inner join emp e2
+    -> on e1.salary<= e2.salary
+    -> group by e1.salary ,concat (e1.Fname,'  ',e1.Lname) as empname
+    -> having count(distinct e2.salary)=4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as empname
+having count(distinct e2.salary)=4' at line 5
+mysql> select concat (Fname,'  ',Lname)  as empname,e1.salary,
+    -> count(DISTINCT e2.salary) as rowcnt
+    -> from emp e1 inner join emp e2
+    -> on e1.salary<= e2.salary
+    -> group by e1.salary ,concat (e1.Fname,'  ',e1.Lname)
+    -> having count(distinct e2.salary)=4;
+ERROR 1052 (23000): Column 'Fname' in field list is ambiguous
+mysql>
+mysql> select concat (e1.Fname,'  ',e1.Lname)  as empname,e1.salary,
+    -> count(DISTINCT e2.salary) as rowcnt
+    -> from emp e1 inner join emp e2
+    -> on e1.salary<= e2.salary
+    -> group by e1.salary ,concat (e1.Fname,'  ',e1.Lname)
+    -> having count(distinct e2.salary)=4;
++---------------+----------+--------+
+| empname       | salary   | rowcnt |
++---------------+----------+--------+
+| Andrew  lusk  | 30000.00 |      4 |
+| Pamela  davis | 30000.00 |      4 |
++---------------+----------+--------+
+2 rows in set (0.00 sec)
+
+mysql>
+
+ select concat (Fname,' ',Lname) as empname, deptid, salary
+from emp main 
+where salary > (select avg(salary) from emp
+where deptid=main.deptid
+);
+
++-----------------+--------+----------+
+| empname         | deptid | salary   |
++-----------------+--------+----------+
+| steven king     |    105 | 50000.00 |
+| nancy greenberg |    105 | 35000.00 |
+| Andrew lusk     |    105 | 30000.00 |
++-----------------+--------+----------+
+3 rows in set (0.00 sec)

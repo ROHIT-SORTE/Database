@@ -1,0 +1,55 @@
+insert into location values(1,'mumbai','mbp');
+insert into location values(2,'banglore','itpl');
+insert into location values(3,'pune','hinjewadi');
+insert into location values(4,'gurgaon','dlf 2');
+insert into location values(5,'hydrabad','hitech city');
+
+insert into dept values(101,'sales',1);
+insert into dept values(102,'HR',3);
+insert into dept values(103,'finance',2);
+insert into dept values(104,'mktg',3);
+insert into dept values(105,'ops',4);
+insert into dept values(106,'it',4);
+insert into dept values(107,'helpdesk',Null);
+
+
+insert into emp values(1001,'steven','king',105,NULL,50000);
+insert into emp values(1002,'neena','kochhar',102,1001,40000);
+insert into emp values(1003,'nancy','greenberg',105,1002,350000);
+insert into emp values(1004,'Pamela','davis',101,1003,30000);
+insert into emp values(1005,'Andrew','lusk',105,1001,30000);
+insert into emp values(1006,'andy','hillman',106,1002,22000);
+insert into emp values(1007,'rene','lopez',105,1001,18000);
+insert into emp values(1008,'sue','fisher',105,1001,11000);
+insert into emp values(1009,'tanya','singh',103,1001,10000);
+
+select concat(e.Fname,'  ',e.Lname) as empname, concat(m.Fname,'  ',m.Lname) as mgrname
+From emp e left outer join emp m
+on e.mgrid=m.empid
+where e.mgrid is  null;
+
+select concat(Fname,'  ',Lname) as empname from emp where
+mgrid= (select mgrid from emp where fname='neena' and lname='kochhar')
+and not(Fname='Neena' and Lname='Kochhar');
+
+
+select concat(Fname,'  ',Lname) as empname from emp where
+salary=(select max(salary) from emp);
+
+select concat (Fname,'  ',Lname)  as empname from emp
+ where salary=(select max(salary) from emp
+where salary< (select max(salary) from emp));
+
+select concat (Fname,'  ',Lname)  as empname from emp
+where salary=(select salary from emp order by salary desc
+limit 3,1);
+
+
+select concat (e1.Fname,'  ',e1.Lname)  as empname,e1.salary,
+count(DISTINCT e2.salary) as rowcnt
+from emp e1 inner join emp e2
+on e1.salary<= e2.salary 
+group by e1.salary ,concat (e1.Fname,'  ',e1.Lname) 
+having count(distinct e2.salary)=4;
+
+
