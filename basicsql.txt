@@ -1,0 +1,203 @@
+==> for creating table
+	CREATE table book
+	(
+	bookid int auto_increment primary key, bookname varchar		(50) not null, price decimal (4.2));
+
+==> ADD COLUMN IN TABLE
+	ALTER table book
+	add column authorname varchar(15) not null; // not bracket
+
+==>MODIFIED COLUMNS DATA TYPES
+	ALTER table book
+	MODIFIED column authorname varchar(20)
+	not null;       // not bracket
+
+==>INCREMENT SYNTAX
+	ALTER TABLE book
+	AUTO_INCREMENT (10,5) column empid int; //not working
+
+==> DIPLAY DATA 
+	DESCRIBE book;
+
+==>REMOVE COLUMN
+	ALTER table book
+	DROP column authorname ;    // not bracket
+
+==>INSERT 
+	INSERT into book(bookname,price,authorname) values
+	('SECRET','29.38','Robert');
+
+	INSERT into book(bookname,price,authorname) values
+	('MRITUNJAYA','99.99','Shivraj');
+
+	INSERT into book(bookname,price,authorname) values
+	('BLACK DAY','89.3','Shreyan');
+
+	INSERT into book(bookname,price,authorname) values
+	('GREATNESS','75.6','Mohan');
+
+	INSERT into book(bookname,price,authorname) values
+	('NEVER','936.25','Manoj');
+
+==>DELETE row
+	DELETE from book
+	where bookid= 5;
+
+==>display table
+	SELECT * from book;
+
+==> UPDATE table
+	UPDATE book
+	SET bookid= 5
+	where bookname='GREATNESS';
+
+==> CHANGE BOOKID 7 to 5;
+
+==> INSERT
+	 INSERT into book(bookname,price,authorname) values
+	('RANGOONS','425','Ranga');    // add at 8 position
+
+==> CHECK
+	ALTER table book
+	add constraint book_price_CHK
+	CHECK (price BETWEEN 50 AND 500); // not in mysql
+
+==>PUTTING IN NULL 
+	 INSERT into book(bookname,price,authorname) values
+	(NULL,'425',NULL);  // cannot null
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+==>CHECK CONSTRAINT IS NOT SUPPORT  BY MYSQL
+
+==> CAR
+	CREATE TABLE cars
+	(carid int  AUTO_INCREMENT  PRIMARY KEY,
+	company varchar(25),
+	name char(10),
+	carno varchar(20));
+
+
+==> TRUNCATE table CAR
+	//only delete data in column
+
+==>DROP table car
+	//remove all car table
+
+==>DESCRIBE car
+	//car not exist
+
+==>CAR
+	CREATE TABLE car
+	(
+	carid int  AUTO_INCREMENT  PRIMARY KEY,
+	company varchar(15) not NULL,
+	carname char(10) NOT NULL,
+	carno varchar(20) not NULL);
+
+==> DISCRIBE car;
+
+==> MODIFIED
+	ALTER table car
+	MODIFIED column carname varchar(20)
+	not null;  
+
+==>  INSERT
+	insert into car(company,carname,carno) values		('Maruti','Balaneo','MP09JT1651');
+	
+	insert into car(company,carname,carno) values			('Suzuki','Celero','MP09JT1153');
+
+	insert into car(company,carname,carno) values			('Hyndai','i20','MP09JT8468');
+
+	insert into car(company,carname,carno) values				('Honda','Swift','MP09JT9548');
+
+	insert into car(company,carname,carno) values			('Mahindra','Scorpio','MP09JT7777');
+
+==> ADD CONSTRAINT 
+	ALTER table car
+	add constraint car_carno_UQ
+	UNIQUE(carno);
+
+==> ADD ENUM
+	ALTER table car
+	add column car_type ENUM	('LUXUARY','HEAVY','PROFESSIONAL');
+
+==> UPDATE
+	UPDATE car
+	set car_type= 'heavy'
+	where carid= 5;
+
+==>TRUNCATE
+	TRUNCATE table emp
+
+========================================================================================================================================================================================================================================================================================================OPERATOR
+
+
+==> select * from car 
+  	WHERE carname like 'B%';  //balaneo
+
+==>  select * from car 
+  	WHERE company like '%i';  //maruti suzuki hyandai
+
+==>  select * from car 
+  	WHERE company like '%e%';  //balaneo celero
+
+==> select length(carname) from car;  //7 6 3 5 7 
+
+==> select length(carno) from car;  //10 10 10 10 10
+
+==> select carname from car where carname LIKE 'B______'; // BALANEO  
+	
+
+==>  select carname from car where carname LIKE 'S??????';   // 					NO RESULT
+
+
+         select carname from car where carname LIKE 'S______'; //SCORPIO 
+
+==> select * from car where carid<= 4;  //print upto 4carid
+
+==>select * from car where carid< 4; // print upto 3
+
+==>select * from car where carid!= 4;  // print all except 4  i.e 1235
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+==> CREATE TABLE FROM FOREIGN KEY
+
+	CREATE table booktrn
+	(
+	 trnid int AUTO_INCREMENT PRIMARY KEY,
+	trndate datetime,
+	bookid int REFERENCES
+	book(bookid),
+	memberid int,
+	CONSTRAINT booktrn_memberid_FK
+	FOREIGN KEY(memberid)
+	references member(memberid)
+	);
+==> 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+==> CREATE TABLE FROM FOREIGN KEY 
+==> CREATE table person
+	(personid int PRIMARY KEY,
+	fname varchar(10) not NULL,
+	mname varchar(10) not NULL,
+	lname varchar(10) not NULL,
+	age int);
+
+
+==> INSERT
+	insert into person(personid,fname,mname,lname,age) values
+	('5','NUS','AUST','VM','28');
+
+==> CREATE table person
+	(personid int PRIMARY KEY,
+	fname varchar(10) not NULL,
+	mname varchar(10) not NULL,
+	lname varchar(10) not NULL,
+	age int);
+	
