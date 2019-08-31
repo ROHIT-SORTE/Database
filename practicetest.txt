@@ -1,0 +1,63 @@
+insert into dept values(102,'it');
+insert into dept values(103,'fin');
+insert into dept values(104,'mkt');
+insert into dept values(101,'hr');
+
+insert into emp values(1001,'John',250.00,101);
+insert into emp values(1002,'Johnathen ',550.00,102);
+insert into emp values(1003,'mojo',750.00,102);
+insert into emp values(1004,'karen',350.00,103);
+insert into emp values(1005,'Sharren',950.00,104);
+
+mysql> select avg(salary) from emp;
+
+QUE 1>WRITE TO QUERY TO DISPLAY ALL DEPARTMENTS WHOSE AVG SALARY IS GREATER THAN 1000
++-------------+
+| avg(salary) |
++-------------+
+|  570.000000 
+select deptname from dept inner join emp on dept.deptid=emp.deptid
+where salary>(select avg(salary) from emp where salary>200) ;
+
+2> WRITE A QUERY TO SHOW ALL DEPT NAME AND MAX OF SALARY OF ALL EMPLOYEES IN THAT DEPT
+select deptid,max(salary) from emp group by deptid;
++--------+-------------+
+| deptid | max(salary) |
++--------+-------------+
+|    101 |         250 |
+|    102 |         750 |
+|    103 |         350 |
+|    104 |         950 |
++--------+-------------+
+
+3>WRITE A QUERY TO SHOW  ALL EMPLOYEES WHOSE NAME CONTAIN 'JO'
+ select empname from emp
+    -> where empname like '%jo%';
++------------+
+| empname    |
++------------+
+| John       |
+| Johnathen  |
+| mojo       |
++------------+
+
+4>WRITE A QUERY TO SHOW ALL EMPLOYEES WHOSE SALARY IS GREATER THAN AVG OF ALL THE EMPLOYEES
+ select empid,empname,deptname,salary from emp inner join dept on emp.deptid=dept.deptid
+    -> where salary>(select avg(salary) from emp );
++-------+---------+----------+--------+
+| empid | empname | deptname | salary |
++-------+---------+----------+--------+
+|  1003 | mojo    | it       |    750 |
+|  1005 | Sharren | mkt      |    950 |
++-------+---------+----------+--------+
+
+5>WRITE A QUERY TO INCREASE SALARY OF EMPLOYEES BY 20% WHERE SALARY IS GREATER THAN 5000
+select (salary*120/100) as salary_incremented from emp
+    -> where salary>500;
++--------------------+
+| salary_incremented |
++--------------------+
+|           660.0000 |
+|           900.0000 |
+|          1140.0000 |
++--------------------+
